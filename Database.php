@@ -57,14 +57,14 @@ public static function create_user($postArray){
 public static function retrieve_id($userName){
 	$query1 = "SELECT userId FROM Person WHERE userName = :userName";
 	$statement = self::getDB()->prepare($query1);
-    $statement->bindValue(':userName', $sessionArray['userName']); 
+    $statement->bindValue(':userName', $userName); 
 	$statement->execute();
 	$results = $statement->fetch();
 	$Id = $results['userId'];
 	return $Id;
 	}		
 	
-public static function user_exists($username, $errorMsg = ""){
+public static function user_exists($username){
 	$query = "SELECT userName FROM Person WHERE userName = :userName";
 		$statement = self::getDB()->prepare($query);
     	$statement->bindValue(':userName', $username);
@@ -72,10 +72,11 @@ public static function user_exists($username, $errorMsg = ""){
 		$results = $statement->fetch();
 		if (empty($results['userName']))
 			return false;
-		else
+		else			
 			return true;	
+		
 	
-	echo $errorMsg;		
+		
 	}
 
 public static function validate_user($username, $password){
@@ -101,16 +102,35 @@ public static function validate_user($username, $password){
 	}
 	
 public static function retrieve_email($username){
-	$query = "SELECT email FROM Person WHERE userName = :userName";
+	$query = "SELECT Email FROM Person WHERE userName = :userName";
 	$statement = self::getDB()->prepare($query);
 	$statement->bindValue(':userName', $username);
 	$statement->execute();
 	$results = $statement->fetch();
-	return $results['email'];
+	return $results['Email'];
 	
-	}	
+	}
 	
-		
+	public static function retrieve_password($username){
+	$query = "SELECT password FROM Person WHERE userName = :userName";
+	$statement = self::getDB()->prepare($query);
+	$statement->bindValue(':userName', $username);
+	$statement->execute();
+	$results = $statement->fetch();
+	return $results['password'];
+	
+	}		
+	
+public static function retrieve_name($username){
+	$query = "SELECT FirstName, LastName FROM Person WHERE userName = :userName";
+	$statement = self::getDB()->prepare($query);
+	$statement->bindValue(':userName', $username);
+	$statement->execute();
+	$results = $statement->fetch();
+	$name = $results['FirstName']." ".$results['LastName'];
+	return $name;
+	
+	}		
 		
 
 }

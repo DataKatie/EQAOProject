@@ -12,12 +12,15 @@ if(isset($_POST['btnsubmit']))
         <table>
             <tr>
                 <td>Username</td>
-                <td><input type="text" name="userName" value=" <?php if($isSubmitted){
+                <td><input type="text" name="userName" value="<?php if($isSubmitted){
 					echo $_POST['userName'];
 					} ?>"/></td>
                 <td><?php if($isSubmitted){
-					$validUserName = validateComplete($_POST['userName'], "Enter a first name") && !Database::user_exists($_POST['userName'], 
-					"Username is already registered. Please enter a different Username");
+					$validUserName = validateComplete($_POST['userName'], "Enter a first name") && 
+					!(Database::user_exists($_POST['userName']));
+					if(Database::user_exists($_POST['userName']))
+						echo "Username already exists. Please choose a different name";
+						
 					} ?></td>
             </tr>
             <tr>
@@ -31,7 +34,7 @@ if(isset($_POST['btnsubmit']))
             </tr>
             <tr>
                 <td>First Name</td>
-                <td><input type="text" name="firstName" value=" <?php if($isSubmitted){
+                <td><input type="text" name="firstName" value="<?php if($isSubmitted){
 					echo $_POST['firstName'];
 					} ?>"/></td>
                  <td><?php if($isSubmitted){
@@ -40,7 +43,7 @@ if(isset($_POST['btnsubmit']))
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="lastName" value=" <?php if($isSubmitted){
+                <td><input type="text" name="lastName" value="<?php if($isSubmitted){
 					echo $_POST['lastName'];
 					} ?>"/></td>
                 <td><?php if($isSubmitted){
@@ -49,7 +52,7 @@ if(isset($_POST['btnsubmit']))
             </tr>
             <tr>
                 <td>Email</td>
-                <td><input type="text" name="email" value=" <?php if($isSubmitted){
+                <td><input type="text" name="email" value="<?php if($isSubmitted){
 					echo $_POST['email'];
 					} ?>"/></td>
                 <td><?php if($isSubmitted){
@@ -71,7 +74,7 @@ if(isset($_POST['btnsubmit']))
 <?php
 	if($isSubmitted){
 	if($validUserName&&$validPassword&&$validFirstName&&$validLastName&&$validEmail){
-		echo "good job you are registered!";
+		echo "good job you are registered! click here to <a href='login.php'>login</a>";
 		Database::create_user($_POST);
 	}
 	else 

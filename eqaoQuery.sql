@@ -337,5 +337,52 @@ childId int NOT NULL references Person(userId)
 ALTER TABLE Person modify COLUMN userName varchar(50) unique not null; 
 
 
-select * from Person;
+CREATE TABLE videos (`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`name` varchar(100) NOT NULL REFERENCES question_6(substrand),
+`link` varchar(100) NOT NULL
+  );
+ 
+INSERT INTO `videos`(`id`, `name`, `link`) VALUES
+(1,' number patterns ','https://www.youtube.com/watch?v=4pLxoe69Jzc'),
+(2,'area of a parallelogram','https://www.youtube.com/watch?v=a4UPkepMXLM'),
+(3,'decimal division','https://www.youtube.com/watch?v=bosixfBHikg'),
+(4,'mean','https://www.youtube.com/watch?v=FM36OLbdZv8'),
+(5,'algebra','https://www.youtube.com/watch?v=1-_hZStC9fM'),
+(6,'rotations','https://www.youtube.com/watch?v=a6MQTpBSNBk'),
+(7,'geometry patterns','https://www.youtube.com/watch?v=Ka82QC4QvGA&list=PL4rxxS6x1HEb4VDvSxeFHAlvhxhuHDx6h'),
+(8,'decimal subtraction','https://www.youtube.com/watch?v=lDXaju6JoQ0'),
+(9,'lines of symmetry','https://www.youtube.com/watch?v=qDtWxr2mfoEv'),
+(10,'probability on a number line','https://www.youtube.com/watch?v=wgpakdTBu7U'),
+(11,'units','https://www.youtube.com/watch?v=umBdW7talCo'),
+(12,'units of capacity','https://www.youtube.com/watch?v=-mfF886s_AA'),
+(13,'percent','https://www.youtube.com/watch?v=rR95Cbcjzus'),
+(14,'cartesian graph','https://www.youtube.com/watch?v=JM06kjvAD_0'),
+(15,'volume of a rectangular prism','https://www.youtube.com/watch?v=u1nWI2b0fT4'),
+(16,'quadrilateral properties','https://www.youtube.com/watch?v=udS3nkj2cfg'),
+(17,'interpreting graphs','https://www.youtube.com/watch?v=FsbxlAw1Cbo'),
+(18,'division','https://www.youtube.com/watch?v=jztxjTGhzRo'),
+(19,'metric conversions','https://www.youtube.com/watch?v=w0nqd_HXHPQ'),
+(20,'stem-and-leaf plots','https://www.youtube.com/watch?v=LEFE1km5ROY'),
+(21,'ratio','https://www.youtube.com/watch?v=IKf5Bjgup6s'),
+(22,'probability','https://www.youtube.com/watch?v=ix-SD2kK-b8'),
+(23,'comparing and ordering decimals','https://www.youtube.com/watch?v=JJawhaMqaXg'),
+(24,'graphing patterns','https://www.youtube.com/watch?v=c92xoWPp9Qg'),
+(25,'area of a parallelogram','https://www.youtube.com/watch?v=a4UPkepMXLM'),
+(26,'algebra','https://www.youtube.com/watch?v=1-_hZStC9fM'),
+(27,'surface area','https://www.youtube.com/watch?v=IHqfTfvOEjg'),
+(28,'ordering and comparing fractions','https://www.youtube.com/watch?v=N8dIOmk_lHs'),
+(29,'decimal multiplication','https://www.youtube.com/watch?v=STyoP3rCmb0'),
+(30,'angles','https://www.youtube.com/watch?v=pEnpwa3Yo8E'),
+(31,'interpreting charts','https://www.youtube.com/watch?v=xO2HptuN5Wg'),
+(32,'isometric drawings','https://www.youtube.com/watch?v=8BFjHJTs4q0'),
+(33,'measuring angles','https://www.youtube.com/watch?v=umBdW7talCo'),
+(34,'ordering and comparing fractions','https://www.youtube.com/watch?v=umBdW7talCo'),
+(35,'transformations','https://www.youtube.com/watch?v=umBdW7talCo'),
+(36,'area of a triangle','https://www.youtube.com/watch?v=umBdW7talCo'),
+(37,'decimal addition','https://www.youtube.com/watch?v=umBdW7talCo'),
+(38,'place value','https://www.youtube.com/watch?v=umBdW7talCo'),
+(39,'benchmarks','https://www.youtube.com/watch?v=umBdW7talCotalCo'),
+(40,'volume of a triangular prism','https://www.youtube.com/watch?v=umBdW7talCo'),
+(41,'decimal multiplication ','https://www.youtube.com/watch?v=umBdW7talCo');
 
+select * from videos;

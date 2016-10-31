@@ -10,10 +10,12 @@ if($isSubmitted){
 ?>
 
 <form method="post" action="login.php">
-<p> User Name: <input type="text" name="userName" value=" <?php if($isSubmitted){ echo $_POST['userName'];} ?>"/>
+<p> User Name: <input type="text" name="userName" value="<?php if($isSubmitted){ echo $_POST['userName'];} ?>"/>
 <p> Password: <input type="text" name="password" />
 <input type="submit" name="btnsubmit" value="Submit" />
 </form>
+<a href="forgotpassword.php"> Forgot my password </a>
+
 <?php
 if($isSubmitted){
 	if ($isValidLogin)
@@ -22,3 +24,5 @@ if($isSubmitted){
 		echo "login failed";	
 	}
 
+
+//$_SESSION["userId"] = Database::retrieve_id($_POST['userName']);
