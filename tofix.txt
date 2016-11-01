@@ -1,0 +1,9 @@
+To Fix:
+1) ***Encrypt passwords before entering into the database - instead use password hash php
+2) ***Instead of emailing out the password, send an identifying link, allowing the user to click the link to create a new password (ask for help) - see point 5
+3) Check if email address is unique? (Might not apply for our site, since students will have parent/teacher with same email) - give update my account, update child/student account options
+4) Connect pages to front end
+5) ****When registering - add to database, make a token and add to DB, set active to false, when user clicks on link, they are returned to the site, which checks the token and then makes them active - send an email to the user with a link
+
+Handle this using the $_GET method to check for the token and make the person active
+Check if the user is active and don't allow them to sign in - please check your email to activate your account - click here to send another email

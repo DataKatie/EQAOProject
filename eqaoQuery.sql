@@ -385,4 +385,5 @@ INSERT INTO `videos`(`id`, `name`, `link`) VALUES
 (40,'volume of a triangular prism','https://www.youtube.com/watch?v=umBdW7talCo'),
 (41,'decimal multiplication ','https://www.youtube.com/watch?v=umBdW7talCo');
 
-select * from videos;
+select * from question_6 WHERE strand = "Measurement";
+INSERT INTO person VALUES (4, "myUserName", "password", "myFirstName", "myLastName", "student", "eqaotestprep@gmail.com");
