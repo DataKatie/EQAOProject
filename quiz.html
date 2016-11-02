@@ -1,55 +1,103 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Quiz</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 
 <a href="Quiz.php">try this </a>
 <body>
 	<form method="post" action = "quiz.html">
 	<table>
-    <tr id="questText" colspan="4"> test question</tr>
-    <tr id = "questImg" colspan="4"> test image</tr>
+    <tr><td id="questText" colspan="4"> test question </td></tr>
+    <tr><td id = "questImg" colspan="4"> test image </td></tr>
     <tr>
-    <td id="ans1"> <input type = "radio" name = "answer" id= "answer1" value="rans1"/></td>
-    <td id="ans2"> <input type = "radio" name = "answer" id= "answer2" value="rans2"/></td>
-    <td id="ans3"> <input type = "radio" name = "answer" id= "answer3" value="rans3"/></td>
-    <td id="ans4"><input type = "radio" name = "answer" id= "answer4" value="rans4"/></td>
+    <td id="ans1"> <input type = "radio" name = "answer" id= "answer1" value="rans1"/><span id="ans_1"></span></td>
+    <td id="ans2"> <input type = "radio" name = "answer" id= "answer2" value="rans2"/><span id="ans_2"></span></td>
+    <td id="ans3"> <input type = "radio" name = "answer" id= "answer3" value="rans3"/><span id="ans_3"></span></td>
+    <td id="ans4"><input type = "radio" name = "answer" id= "answer4" value="rans4"/><span id="ans_4"></span></td>
     </tr>
-    <tr> <input type = "submit" value = "next"/></tr>
+    <tr> <td colspan = "4" ><input type = "button" id="submit" value = "next" /></td></tr>
     </table>
+    <input type="hidden" id="clicks" value="0"/>
+    <input type = "hidden" id="wrongAnswers" value=""/>
 </form>
-<script>alert("hi");</script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"> </script>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	var counter = 0;
+
 	
     $(document).ready(function(){
-        $.getJSON('Quiz.php', function(data){
-            var questionText = data.quest_text[0];
-			alert(questionText);
-			$('#questText').html(questionText);
-            
-        });
 		
-		//we will do a button.click function instead to dynamically update - pull all questions from database, as json, onclick, get next
+			var counter = $('#clicks').val();
+			
+		  $.getJSON('Quiz.php', function(data){
+			 
+            var questionText = data[counter].quest_text;
+			var questionImage = data[counter].image;
+			var answer1 = data[counter].ans1;
+			var answer2 = data[counter].ans2;
+			var answer3 = data[counter].ans3;
+			var answer4 = data[counter].ans4;
+			var correct = data[counter].correct_ans;
+			var questionId = data[counter].quest_id;
+           
+					
+            $('#questText').html(questionText);
+			$('#questImg').html(questionImage);
+			$('#ans_1').html(answer1);
+			$('#ans_2').html(answer2);
+			$('#ans_3').html(answer3);
+			$('#ans_4').html(answer4); 
+        }); 
+		
+		
+		
+		
+	});
+		
+	$('#submit').click(function(){
+					
+			
+			var counter = $('#clicks').val();
+			counter = parseInt(counter) + 1;
+			$('#clicks').val((counter ));
+			
+			$("input:radio").removeAttr("checked");
+			
+		
+		
+		  $.getJSON('Quiz.php', function(data){
+			 
+            var questionText = data[counter].quest_text;
+			var questionImage = data[counter].image;
+			var answer1 = data[counter].ans1;
+			var answer2 = data[counter].ans2;
+			var answer3 = data[counter].ans3;
+			var answer4 = data[counter].ans4;
+        	var correct = data[counter].correct_ans; 
+			var questionId = data[counter].quest_id;  
+					
+            $('#questText').html(questionText);
+			$('#questImg').html(questionImage);
+			$('#ans_1').html(answer1);
+			$('#ans_2').html(answer2);
+			$('#ans_3').html(answer3);
+			$('#ans_4').html(answer4);  
+			
+			/*if(!(($('#answer1').is(':checked') && correct == 1) ||	($('#answer2').is(':checked') && correct == 2) ||
+		($('#answer3').is(':checked') && correct == 3) ||($('#answer4').is(':checked') && correct == 4))){
+			alert("wrong");
+			var wrongAnswers = $('#wrongAnswers').val() + "," + questionId;
+			$('#wrongAnswers').val(wrongAnswers);
+		} */
+			
+			
+			});
+			
+			});	
+		
 
-     /*   $('#category').change(function(){
-
-            var cateee = $('#category').val();
-            $.getJSON('getproductincategory.php',{cat : cateee}, function (data) {
-                var result ="<ul>";
-                $.each(data, function(index,product){
-                    result += "<li>" + product.category + " : " + product.productName + "</li>";
-                });
-                result += "</ul>";
-
-                $('#prodlist').html(result);
-            });
-        })
-
-    }); */
 </script>
 </body>
 </html>

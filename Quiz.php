@@ -30,34 +30,36 @@ public static function select_quiz($userId){
 	
 	
 public static function retrieve_questions($quizNum){
-	$questList;
+	$query1;
 	switch ($quizNum){
 		case 1: 
-			$questList = " (6, 10, 15, 18, 3, 9, 14, 25, 1,5, 8, 16, 4, 11, 20, 24, 2, 7, 12, 13) ";
+			$query1 = "SELECT * FROM question_6 WHERE quest_id IN (6, 10, 15, 18, 3, 9, 14, 25, 1,5, 8, 16, 4, 11, 20, 24, 2, 7, 12, 13) ORDER BY quest_id" ;
 			break;
 		case 2:
-			$questList = '(19, 27, 29 42, 28, 32, 36, 38, 22, 31, 34, 39, 26, 30, 37, 40, 17, 23, 33, 35)';
-			break;
+		$query1 ="SELECT * FROM question_6 WHERE quest_id IN (19, 27, 29 42, 28, 32, 36, 38, 22, 31, 34, 39, 26, 30, 37, 40, 17, 23, 33, 35) ORDER BY quest_id" ;
+			
 		case 3: 
-			$questList = '(48, 49, 50, 53, 43, 51,56, 59, 45, 46, 57, 58, 44, 47, 60, 61, 41, 52, 55, 63)';	
+			$query1 = "SELECT * FROM question_6 WHERE quest_id IN (48, 49, 50, 53, 43, 51,56, 59, 45, 46, 57, 58, 44, 47, 60, 61, 41, 52, 55, 63) ORDER BY quest_id" ; 	
 			break;	
 		case 4:
-			$questList = '(70, 86, 89, 96, 62, 64, 72, 80, 68, 73, 76, 77, 67, 71, 75, 81, 65, 66, 69, 74)';
+			$query1 =  "SELECT * FROM question_6 WHERE quest_id IN (70, 86, 89, 96, 62, 64, 72, 80, 68, 73, 76, 77, 67, 71, 75, 81, 65, 66, 69, 74) ORDER BY quest_id" ;
 			break;
 		case 5:
-			$questList = '(99, 100, 101, 102, 83, 92, 94, 95, 85, 88, 90, 93, 84, 91, 97, 98, 78, 79, 82, 87)';
+			$query1 ="SELECT * FROM question_6 WHERE quest_id IN (99, 100, 101, 102, 83, 92, 94, 95, 85, 88, 90, 93, 84, 91, 97, 98, 78, 79, 82, 87) ORDER BY quest_id" ;
 			break;
 		default:
-			$questList='';
+			$query1='';
 				
 		}
-	echo "question list". $questList;	
-	$query1 = "SELECT * FROM question_6 WHERE quest_id IN :questList ORDER BY quest_id";
+	
+	
 	$statement = Database::getDB()->prepare($query1);
-    $statement->bindValue(':questList', $questList);
-	$statement->execute();
+   	$statement->execute();
 	$results = $statement->fetchAll();
-	return $results;
+	$jresults = json_encode($results);
+	
+	return $jresults;
+	
 	
 	}
 	
@@ -67,11 +69,11 @@ public static function retrieve_questions($quizNum){
 
 if(isset($_SESSION['userId'])){
 	$quizNumber = Quiz::select_quiz($_SESSION['userId']);
-	echo "quizNumber: ".$quizNumber;
+	
 	$questions = Quiz::retrieve_questions($quizNumber);
-	$jquestions = json_encode($questions);
+	
 	header("Content-Type: application/json");
-	echo $jquestions;
+	echo $questions;
 	
 	
 	
