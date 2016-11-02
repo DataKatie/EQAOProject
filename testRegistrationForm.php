@@ -74,8 +74,98 @@ if(isset($_POST['btnsubmit']))
 <?php
 	if($isSubmitted){
 	if($validUserName&&$validPassword&&$validFirstName&&$validLastName&&$validEmail){
-		echo "good job you are registered! click here to <a href='login.php'>login</a>";
-		Database::create_user($_POST);
+		$token = bin2hex(openssl_random_pseudo_bytes(16));
+		
+		Database::create_user($_POST, $token);
+		$userEmail = $_POST['email'];
+		$userFullName = $_POST['firstName']." ".$_POST['lastName'];
+		$userName = $_POST['userName'];
+		
+		/**
+ * This example shows settings to use when sending via Google's Gmail servers.
+ */
+
+//SMTP needs accurate times, and the PHP time zone MUST be set
+//This should be done in your php.ini, but this is how to do it if you don't have access to that
+date_default_timezone_set('Etc/UTC');
+
+require('PHPMailerAutoload.php');
+
+//Create a new PHPMailer instance
+$mail = new PHPMailer;
+
+//Tell PHPMailer to use SMTP
+$mail->isSMTP();
+
+//Enable SMTP debugging
+// 0 = off (for production use)
+// 1 = client messages
+// 2 = client and server messages
+$mail->SMTPDebug = 0;
+
+//Ask for HTML-friendly debug output
+$mail->Debugoutput = 'html';
+
+//Set the hostname of the mail server
+$mail->Host = 'ssl://smtp.gmail.com';
+
+//Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
+$mail->Port = 465;
+
+//Set the encryption system to use - ssl (deprecated) or tls
+$mail->SMTPSecure = 'ssl';
+
+//Whether to use SMTP authentication
+$mail->SMTPAuth = true;
+
+//Username to use for SMTP authentication - use full email address for gmail
+$mail->Username = "eqaotestprep@gmail.com";
+
+//Password to use for SMTP authentication
+$mail->Password = "katieistheboss";
+
+//Set who the message is to be sent from
+$mail->setFrom('eqaotestprep@gmail.com', 'EduTech');
+
+//Set an alternative reply-to address
+//$mail->addReplyTo('replyto@example.com', 'First Last');
+
+//Set who the message is to be sent to
+$mail->addAddress($userEmail, $userFullName);
+
+//Set the subject line
+$mail->Subject = 'Your EduTech registration';
+
+//Read an HTML message body from an external file, convert referenced images to embedded,
+//convert HTML into a basic plain-text alternative body
+$mail->msgHTML("<h2>Dear ".  $userFullName. ",  <br> Please click the link to complete your EduTech registration: 
+<a href='localhost/finalProject/registrationverification.php?token=".$token."&userName=".$userName."'>Complete Registration </a> <br>
+Or, paste the following url into your browser: localhost/finalProject/registrationverification.php?token=".$token."&userName=".$userName);
+
+//Replace the plain text body with one created manually
+$mail->AltBody = "Dear ".  $userFullName. ",  Please click the link below or paste the link into your browser to complete your EduTech registration: localhost/finalProject/registrationverification.php?token=".$token."&userName=".$userName;
+
+//Attach an image file
+//$mail->addAttachment('images/phpmailer_mini.png');
+
+//send the message, check for errors
+if (!$mail->send()) {
+    echo "Mailer Error: " . $mail->ErrorInfo;
+} else {
+    echo "An email has been sent to ". $_POST['email']. ". Please follow the link to activate your account.";
+	
+}	
+		
+		
+		
+	
+	
+		
+		
+		
+		
+		
+		
 	}
 	else 
 		echo "registration errors, try again.";	

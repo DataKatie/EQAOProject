@@ -21,9 +21,10 @@ require_once('Database.php');
 		
 	else{
 		$userEmail = Database::retrieve_email($_POST['userName']);
-		$userName = Database::retrieve_name($_POST['userName']);
-		$userPassword = Database::retrieve_password($_POST['userName']);
+		$userFullName = Database::retrieve_name($_POST['userName']);
+		$token = bin2hex(openssl_random_pseudo_bytes(16));
 		
+		Database::update_token($_POST['userName'], $token);
 		
 
 /**
@@ -76,19 +77,18 @@ $mail->setFrom('eqaotestprep@gmail.com', 'EduTech');
 //$mail->addReplyTo('replyto@example.com', 'First Last');
 
 //Set who the message is to be sent to
-$mail->addAddress($userEmail, $userName);
+$mail->addAddress($userEmail, $userFullName);
 
 //Set the subject line
 $mail->Subject = 'Your EduTech password';
 
 //Read an HTML message body from an external file, convert referenced images to embedded,
 //convert HTML into a basic plain-text alternative body
-$mail->msgHTML("<h2>Dear Edutech user, <br> Your EduTech userName is: ".$_POST['userName']."<br> 
-Your EduTech password is: ".$userPassword ." </h2>");
+$mail->msgHTML("<h2>Dear Edutech user, <br> Please follow the link to update your password: <a href=localhost/finalProject/updateForgottenPassword.php?userName=".$_POST['userName']."&token=".$token.">Update Password </a> <br> 
+Or, paste this link into your browser: localhost/finalProject/updateForgottenPassword.php?userName=".$_POST['userName']."&token=".$token."</h2>");
 
 //Replace the plain text body with one created manually
-$mail->AltBody = "Dear Edutech user,  Your EduTech userName is: ".$_POST['userName']." 
-Your EduTech password is: ".$userPassword ;
+$mail->AltBody = "Dear Edutech user, please click or paste the following url into your browser to update your password: localhost/finalProject/updateForgottenPassword.php?userName=".$_POST['userName']."&token=".$token;
 
 //Attach an image file
 //$mail->addAttachment('images/phpmailer_mini.png');

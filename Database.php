@@ -24,10 +24,11 @@ catch(PDOException $e){
 
 
 
-public static function create_user($postArray){
+public static function create_user($postArray, $token){
 	
-	$query = "INSERT INTO Person (userName, password, FirstName, LastName, Role, email) VALUES (:userName, :password, :firstName, 
-	:lastName, :role, :email)";
+	
+	$query = "INSERT INTO Person (userName, password, FirstName, LastName, Role, email, token) VALUES (:userName, :password, :firstName, 
+	:lastName, :role, :email, :token)";
 	$db = self::getDB();
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$statement = $db->prepare($query);
@@ -37,6 +38,7 @@ public static function create_user($postArray){
     $statement->bindValue(':lastName', $postArray['lastName']); 
 	$statement->bindValue(':role', $postArray['role']); 
 	$statement->bindValue(':email', $postArray['email']); 
+	$statement->bindValue(':token', $token); 
     $statement->execute();
     $statement->closeCursor();
 	
@@ -80,7 +82,7 @@ public static function user_exists($username){
 	}
 
 public static function validate_user($username, $password){
-		$query = "SELECT userName, password FROM Person WHERE userName = :userName";
+		$query = "SELECT userName, password, active FROM Person WHERE userName = :userName";
 		$statement = self::getDB()->prepare($query);
     	$statement->bindValue(':userName', $username);
 		$statement->execute();
@@ -94,6 +96,10 @@ public static function validate_user($username, $password){
 				echo "Password does not match. Please try again.";
 					return false;
 				}
+			else if($results['active']==0){
+				echo "Your account has not been activated. Please first activate your account by following the emailed link.";
+				
+				}	
 			else
 				return true;	
 			
@@ -111,7 +117,7 @@ public static function retrieve_email($username){
 	
 	}
 	
-	public static function retrieve_password($username){
+	/*public static function retrieve_password($username){
 	$query = "SELECT password FROM Person WHERE userName = :userName";
 	$statement = self::getDB()->prepare($query);
 	$statement->bindValue(':userName', $username);
@@ -119,7 +125,7 @@ public static function retrieve_email($username){
 	$results = $statement->fetch();
 	return $results['password'];
 	
-	}		
+	}	*/	
 	
 public static function retrieve_name($username){
 	$query = "SELECT FirstName, LastName FROM Person WHERE userName = :userName";
@@ -130,7 +136,58 @@ public static function retrieve_name($username){
 	$name = $results['FirstName']." ".$results['LastName'];
 	return $name;
 	
-	}		
+	}
+	
+public static function validate_token($username, $token){
+	$query = "SELECT * FROM Person WHERE userName = :userName AND token = :token";
+	$statement = self::getDB()->prepare($query);
+	$statement->bindValue(':userName', $username);
+	$statement->bindValue(':token', $token);
+	$statement->execute();
+	$results = $statement->fetch();
+	if ($results != null && strlen($results['userName'])> 0 ){
+	
+	$query1 = "UPDATE Person SET active = 1 WHERE userName = :userName";
+	$statement1 = self::getDB()->prepare($query1);
+	$statement1->bindValue(':userName', $username);
+	$statement1->execute();
+	$statement1->closeCursor();
+	
+	
+		return true;
+	}
+	else 
+		return false;	
+		
+	}			
+
+public static function update_token($userName, $token){
+	
+	$query1 = "UPDATE Person SET token = :token WHERE userName = :userName";
+	$statement1 = self::getDB()->prepare($query1);
+	$statement1->bindValue(':token', $token);
+	$statement1->bindValue(':userName', $userName);
+	$statement1->execute();
+	$statement1->closeCursor();
+	
+	
+		return true;
+	
+	}
+	
+public static function update_password($userName, $password){
+	$query1 = "UPDATE Person SET password = :password WHERE userName = :userName";
+	$statement1 = self::getDB()->prepare($query1);
+	$statement1->bindValue(':password', $password);
+	$statement1->bindValue(':userName', $userName);
+	$statement1->execute();
+	$statement1->closeCursor();
+	
+	
+		return true;
+	
+	}	
+
 		
 
 }
