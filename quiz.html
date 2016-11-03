@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 
-<a href="Quiz.php">try this </a>
+
 <body>
-	<form method="post" action = "quiz.html">
+	<form id="quizform" method="post" action = "quizresults.php">
 	<table>
     <tr><td id="questText" colspan="4"> test question </td></tr>
     <tr><td id = "questImg" colspan="4"> test image </td></tr>
@@ -17,10 +17,11 @@
     <td id="ans3"> <input type = "radio" name = "answer" id= "answer3" value="rans3"/><span id="ans_3"></span></td>
     <td id="ans4"><input type = "radio" name = "answer" id= "answer4" value="rans4"/><span id="ans_4"></span></td>
     </tr>
-    <tr> <td colspan = "4" ><input type = "button" id="submit" value = "next" /></td></tr>
+    <tr> <td colspan = "4" id="next_button" ><input type = "button" id="submit" value = "next" /></td></tr>
+    
     </table>
     <input type="hidden" id="clicks" value="0"/>
-    <input type = "hidden" id="wrongAnswers" value=""/>
+    <input type = "hidden" name="wrongAnswers" id="wrongAnswers" value=""/>
 </form>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -44,11 +45,27 @@
            
 					
             $('#questText').html(questionText);
-			$('#questImg').html(questionImage);
+			
+			if(answer1.slice(-3) == 'jpg'){
+				$('#ans_1').html("<img src=images/"+answer1+">");
+			$('#ans_2').html("<img src=images/"+answer1+">");
+			$('#ans_3').html("<img src=images/"+answer1+">");
+			$('#ans_4').html("<img src=images/"+answer1+">"); 
+				}
+			
+			else{
 			$('#ans_1').html(answer1);
 			$('#ans_2').html(answer2);
 			$('#ans_3').html(answer3);
 			$('#ans_4').html(answer4); 
+			}
+			
+			if (questionImage != null) {
+				$('#questImg').html("<img src = images/"+questionImage +">");
+				} 
+			else{
+					$('#questImg').html('');
+				}	
         }); 
 		
 		
@@ -60,10 +77,16 @@
 					
 			
 			var counter = $('#clicks').val();
+			
+			if(counter >= 19){
+				
+				$('#next_button').html("<input type='submit' value='view my results!'/>");
+				}
+			
 			counter = parseInt(counter) + 1;
 			$('#clicks').val((counter ));
 			
-			$("input:radio").removeAttr("checked");
+			
 			
 		
 		
@@ -75,22 +98,47 @@
 			var answer2 = data[counter].ans2;
 			var answer3 = data[counter].ans3;
 			var answer4 = data[counter].ans4;
-        	var correct = data[counter].correct_ans; 
-			var questionId = data[counter].quest_id;  
+        	var correct = data[counter-1].correct_ans; 
+			var questionId = data[counter-1].quest_id;  
 					
             $('#questText').html(questionText);
-			$('#questImg').html(questionImage);
+			
+			if(answer1.slice(-3) == 'jpg'){
+				$('#ans_1').html("<img src=images/"+answer1+">");
+			$('#ans_2').html("<img src=images/"+answer1+">");
+			$('#ans_3').html("<img src=images/"+answer1+">");
+			$('#ans_4').html("<img src=images/"+answer1+">"); 
+				}
+			
+			else{
 			$('#ans_1').html(answer1);
 			$('#ans_2').html(answer2);
 			$('#ans_3').html(answer3);
-			$('#ans_4').html(answer4);  
+			$('#ans_4').html(answer4); 
+			}
 			
-			/*if(!(($('#answer1').is(':checked') && correct == 1) ||	($('#answer2').is(':checked') && correct == 2) ||
+			
+			if (questionImage != null) {
+				$('#questImg').html("<img src = images/"+questionImage +">");
+				} 
+			else{
+				$('#questImg').html('');
+				}	
+			
+			
+			
+			if(!(($('#answer1').is(':checked') && correct == 1) ||	($('#answer2').is(':checked') && correct == 2) ||
 		($('#answer3').is(':checked') && correct == 3) ||($('#answer4').is(':checked') && correct == 4))){
-			alert("wrong");
+			
 			var wrongAnswers = $('#wrongAnswers').val() + "," + questionId;
+			
 			$('#wrongAnswers').val(wrongAnswers);
-		} */
+			
+		} 
+			
+			$("input:radio").removeAttr("checked");
+		
+			
 			
 			
 			});
