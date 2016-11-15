@@ -20,6 +20,7 @@
     <tr> <td colspan = "4" id="next_button" ><input type = "button" id="submit" value = "next" /></td></tr>
     
     </table>
+    <!-- these hidden columns hold a counter variable, and a list of all answers the person gets wrong -->
     <input type="hidden" id="clicks" value="0"/>
     <input type = "hidden" name="wrongAnswers" id="wrongAnswers" value=""/>
 </form>
@@ -29,7 +30,7 @@
 
 	
     $(document).ready(function(){
-		
+		//Load the first question - counter starts at 0		
 			var counter = $('#clicks').val();
 			
 		  $.getJSON('Quiz.php', function(data){
@@ -43,14 +44,16 @@
 			var correct = data[counter].correct_ans;
 			var questionId = data[counter].quest_id;
            
-					
+			//Put the question text into the table		
             $('#questText').html(questionText);
 			
+			
+			//If the answer has the last 3 characters jpg, make an image tag, otherwise, just put in the text
 			if(answer1.slice(-3) == 'jpg'){
 				$('#ans_1').html("<img src=images/"+answer1+">");
-			$('#ans_2').html("<img src=images/"+answer1+">");
-			$('#ans_3').html("<img src=images/"+answer1+">");
-			$('#ans_4').html("<img src=images/"+answer1+">"); 
+			$('#ans_2').html("<img src=images/"+answer2+">");
+			$('#ans_3').html("<img src=images/"+answer3+">");
+			$('#ans_4').html("<img src=images/"+answer4+">"); 
 				}
 			
 			else{
@@ -60,6 +63,7 @@
 			$('#ans_4').html(answer4); 
 			}
 			
+			//If the image is not null, make an image tag, otherwise, print an empty string
 			if (questionImage != null) {
 				$('#questImg').html("<img src = images/"+questionImage +">");
 				} 
@@ -75,21 +79,23 @@
 		
 	$('#submit').click(function(){
 					
-			
+		//each time the button is clicked, get the counter value	
 			var counter = $('#clicks').val();
 			
+			//If the counter is at 19, change the next button to a submit button
 			if(counter >= 19){
 				
 				$('#next_button').html("<input type='submit' value='view my results!'/>");
 				}
-			
+			//Add one to the counter
 			counter = parseInt(counter) + 1;
+			//Save the new counter value in the hidden field
 			$('#clicks').val((counter ));
 			
 			
 			
 		
-		
+		//retrieve the question bank
 		  $.getJSON('Quiz.php', function(data){
 			 
             var questionText = data[counter].quest_text;
@@ -98,16 +104,18 @@
 			var answer2 = data[counter].ans2;
 			var answer3 = data[counter].ans3;
 			var answer4 = data[counter].ans4;
-        	var correct = data[counter-1].correct_ans; 
+        	//The id and correct answer correspond to the previously shown question onClick
+			var correct = data[counter-1].correct_ans; 
 			var questionId = data[counter-1].quest_id;  
-					
+			
+			//See above code		
             $('#questText').html(questionText);
 			
 			if(answer1.slice(-3) == 'jpg'){
 				$('#ans_1').html("<img src=images/"+answer1+">");
-			$('#ans_2').html("<img src=images/"+answer1+">");
-			$('#ans_3').html("<img src=images/"+answer1+">");
-			$('#ans_4').html("<img src=images/"+answer1+">"); 
+			$('#ans_2').html("<img src=images/"+answer2+">");
+			$('#ans_3').html("<img src=images/"+answer3+">");
+			$('#ans_4').html("<img src=images/"+answer4+">"); 
 				}
 			
 			else{
@@ -125,17 +133,18 @@
 				$('#questImg').html('');
 				}	
 			
-			
+		//If the answer doesn't match the correct answer, add it to the wrong answer list in the hidden form field	
 			
 			if(!(($('#answer1').is(':checked') && correct == 1) ||	($('#answer2').is(':checked') && correct == 2) ||
 		($('#answer3').is(':checked') && correct == 3) ||($('#answer4').is(':checked') && correct == 4))){
 			
 			var wrongAnswers = $('#wrongAnswers').val() + "," + questionId;
 			
+			//record the new value
 			$('#wrongAnswers').val(wrongAnswers);
 			
 		} 
-			
+			//At the end of this transaction, uncheck the radio buttons
 			$("input:radio").removeAttr("checked");
 		
 			
