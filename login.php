@@ -1,7 +1,10 @@
 <?php
 require_once('Database.php');
 session_start();
-
+$file = 'login.php';
+if(file_exists($file)){
+echo "hi";
+}
 	
    
 $isSubmitted = false;
