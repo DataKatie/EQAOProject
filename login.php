@@ -2,6 +2,11 @@
 require_once('Database.php');
 session_start();
 
+if(basename($_SERVER('PHP_SELF') == 'login.php'){
+ echo "test";
+}
+	
+   
 $isSubmitted = false;
 if(isset($_POST['btnsubmit']))
 {
