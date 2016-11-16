@@ -35,6 +35,7 @@
 			
 		  $.getJSON('Quiz.php', function(data){
 			 
+if(counter < 19){
             var questionText = data[counter].quest_text;
 			var questionImage = data[counter].image;
 			var answer1 = data[counter].ans1;
@@ -70,6 +71,7 @@
 			else{
 					$('#questImg').html('');
 				}	
+}
         }); 
 		
 		
@@ -98,7 +100,8 @@
 		//retrieve the question bank
 		  $.getJSON('Quiz.php', function(data){
 			 
-            var questionText = data[counter].quest_text;
+	if(counter < 20){
+	        var questionText = data[counter].quest_text;
 			var questionImage = data[counter].image;
 			var answer1 = data[counter].ans1;
 			var answer2 = data[counter].ans2;
@@ -147,14 +150,38 @@
 			//At the end of this transaction, uncheck the radio buttons
 			$("input:radio").removeAttr("checked");
 		
+	}
+	if (counter == 20){
+		
+			var correct = data[counter-1].correct_ans; 
+			var questionId = data[counter-1].quest_id;  
+			
+			//See above code		
+            
+		
 			
 			
+		//If the answer doesn't match the correct answer, add it to the wrong answer list in the hidden form field	
+			
+			if(!(($('#answer1').is(':checked') && correct == 1) ||	($('#answer2').is(':checked') && correct == 2) ||
+		($('#answer3').is(':checked') && correct == 3) ||($('#answer4').is(':checked') && correct == 4))){
+			
+			var wrongAnswers = $('#wrongAnswers').val() + "," + questionId;
+			
+			//record the new value
+			$('#wrongAnswers').val(wrongAnswers);
+		}
+					
+		}			
 			
 			});
 			
 			});	
 		
 
+//ERROR - last question isn't being stored!!!
+
+		
 </script>
 </body>
 </html>

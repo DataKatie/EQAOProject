@@ -186,7 +186,31 @@ public static function update_password($userName, $password){
 	
 		return true;
 	
-	}	
+	}
+
+public static function retrieve_substrands($array){
+	
+	$substrandArray = array();
+	
+	foreach ($array as $questionNum){
+		
+	$query = "SELECT substrand FROM question_6 WHERE quest_id = :quest_id";
+	$statement = self::getDB()->prepare($query);
+	$statement->bindValue(':quest_id', $questionNum);
+	$statement->execute();
+	$results = $statement->fetch();
+	$substrandArray[] = $results['substrand'];
+		
+		}
+	
+	return $substrandArray;
+	
+	}
+
+public static function retrieve_videos($sustrand_array){
+	
+	
+	}			
 
 		
 
