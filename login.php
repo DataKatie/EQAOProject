@@ -1,10 +1,7 @@
 <?php
 require_once('Database.php');
 session_start();
-$file = 'login.php';
 
-	
-   
 $isSubmitted = false;
 if(isset($_POST['btnsubmit']))
 {
@@ -45,14 +42,15 @@ if(isset($_POST['btnsubmit']))
 
 }
 ?>
-
+<html>
 	<form method="post" action="login.php">
-		<p> User Name: <input type="text" name="userName" value="<?php if(isset($_COOKIE['userName'])) { echo $_COOKIE['userName']; } ?>"/>
-		<p> Password: <input type="password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password']; } ?>"/>
+		<p> User Name: <input type="text" name="userName" value="<?php if(isset($_COOKIE['userName'])) { echo $_COOKIE['userName']; } ?>"/> </p>
+		<p> Password: <input type="password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password']; } ?>"/></p>
 			<input type="checkbox" name="autologin" value="1">Remember Me
 			<input type="submit" name="btnsubmit" value="Submit" />
 	</form>
 	<a href="forgotpassword.php"> Forgot my password </a>
+</html>    
 <?php
 
 ?>
