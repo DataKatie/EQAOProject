@@ -1,6 +1,9 @@
 
 <!DOCTYPE html>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
@@ -48,6 +51,10 @@ if(isset($_POST['btnsubmit']))
 
 }
 ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 <head>
     <title>Edu-Tech</title>
     <!-- Meta -->
