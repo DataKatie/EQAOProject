@@ -385,9 +385,17 @@ INSERT INTO `videos`(`id`, `name`, `link`) VALUES
 (40,'volume of a triangular prism','https://www.youtube.com/watch?v=umBdW7talCo'),
 (41,'decimal multiplication ','https://www.youtube.com/watch?v=umBdW7talCo');
 
+ALTER TABLE test_result MODIFY incorrect_questions varchar(1000);
+
 SELECT * FROM question_6 WHERE quest_id IN  (6, 10, 15, 18, 3, 9, 14, 25, 1,5, 8, 16, 4, 11, 20, 24, 2, 7, 12, 13) ORDER BY quest_id;
 SELECT userId FROM Person WHERE userName = "myUserName";
 INSERT INTO person VALUES (4, "myUserName", "password", "myFirstName", "myLastName", "student", "eqaotestprep@gmail.com");
 Select * from person;
 alter table Person add token varchar(200);
 alter table Person add active bit default  0;
+update  videos set name ="number patterns" where id = 1;
+select * from grades;
+delete from grades where userId = 7;
+
+
+select * from test_result;

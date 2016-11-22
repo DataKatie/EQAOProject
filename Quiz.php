@@ -4,7 +4,7 @@ require_once('Database.php');
 session_start();
 
 class Quiz{
-
+//Check how many quizzes the user has taken and return the quiz number of the first one they have not taken
 public static function select_quiz($userId){
 	$query = "SELECT * FROM Grades WHERE userId = :userId";
 	$statement = Database::getDB()->prepare($query);
@@ -28,7 +28,7 @@ public static function select_quiz($userId){
 	
 	}	
 	
-	
+//Depending on the quiz they are on, retrieve questions equally distributed by strand, ordered by question id	
 public static function retrieve_questions($quizNum){
 	$query1;
 	switch ($quizNum){
@@ -66,9 +66,10 @@ public static function retrieve_questions($quizNum){
 			
 	
 }
-
+//if the user is logged on, set a test session variable and then retrieve and echo the json questions
 if(isset($_SESSION['userId'])){
 	$quizNumber = Quiz::select_quiz($_SESSION['userId']);
+	$_SESSION['test'] = $quizNumber;
 	
 	$questions = Quiz::retrieve_questions($quizNumber);
 	
@@ -78,6 +79,7 @@ if(isset($_SESSION['userId'])){
 	
 	
 	}
+//if the user hasn't logged on, return them to the login page	
 else {
 	
 	echo "Please <a href= 'login.php'>log in </a> to view this content";

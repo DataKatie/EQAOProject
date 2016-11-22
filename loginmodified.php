@@ -1,9 +1,3 @@
-
-<!DOCTYPE html>
-
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
 <?php
 require_once('Database.php');
 session_start();
@@ -48,6 +42,10 @@ if(isset($_POST['btnsubmit']))
 
 }
 ?>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
 <head>
     <title>Edu-Tech</title>
     <!-- Meta -->
@@ -107,16 +105,65 @@ if(isset($_POST['btnsubmit']))
     </style>
 </head> 
 
-<body class="home-page">  
+<body class="home-page">   
+    <!-- ******HEADER****** --> 
+    <header id="header" class="header navbar-fixed-top">  
+        <div class="container">       
+            <h1 class="logo">
+                <a href="index.html"><span class="text">Edu-Tech</span></a>
+            </h1><!--//logo-->
+            <nav class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active nav-item"><a href="#">Home</a></li>
+                        <li class="nav-item"><a href="#">Features</a></li>
+                        <li class="nav-item"><a href="login.php">Log in</a></li>
+                        <li class="nav-item nav-item-cta last"><a class="btn btn-cta btn-cta-secondary" href="#">Sign Up</a></li>
+                    </ul><!--//nav-->
+                </div><!--//navabr-collapse-->
+            </nav><!--//main-nav-->                     
+        </div><!--//container-->
+    </header><!--//header-->
 	<form method="post" action="login.php">
 		<p> User Name: <input type="text" name="userName" value="<?php if(isset($_COOKIE['userName'])) { echo $_COOKIE['userName']; } ?>"/> </p>
-		<p> Password: <input type="password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password']; } ?>"/></p>
+		<p> Password: <input type="password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password']; } ?>"/> </p>
 			<input type="checkbox" name="autologin" value="1">Remember Me
 			<input type="submit" name="btnsubmit" value="Submit" />
 	</form>
 	<a href="forgotpassword.php"> Forgot my password </a>
 </body>
-</html>    
+<footer class="footer footer-main">
+        <div class="footer-content">
+            <div class="container">
+                <div class="row">                    
+                    <div class="footer-col connect col-xs-12">
+                        <div class="footer-col-middle">
+                            <ul class="social list-inline">
+                                <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a> </li>
+                                <li class="social-google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div><!--//footer-col-inner-->
+                    </div><!--//foooter-col-->
+                    <div class="clearfix"></div> 
+                </div><!--//row-->
+            </div><!--//container-->
+        </div><!--//footer-content-->
+        <div class="bottom-bar">
+            <div class="container">
+                <small class="copyright">Copyright Edu-Tech Inc. </a></small>                
+            </div><!--//container-->
+        </div><!--//bottom-bar-->
+    </footer><!--//footer-->
+</html>
 <?php
 
 ?>
