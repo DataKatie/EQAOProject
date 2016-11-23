@@ -385,6 +385,54 @@ INSERT INTO `videos`(`id`, `name`, `link`) VALUES
 (40,'volume of a triangular prism','https://www.youtube.com/watch?v=umBdW7talCo'),
 (41,'decimal multiplication ','https://www.youtube.com/watch?v=umBdW7talCo');
 
+truncate table videos;
+alter table videos modify link varchar(750);
+
+INSERT INTO `videos`(`id`, `name`, `link`) VALUES 
+(1, 'number patterns','<iframe width="640" height="360" src="https://www.youtube.com/embed/4pLxoe69Jzc" frameborder="0" allowfullscreen></iframe>'),
+(2,'area of a parallelogram','<iframe width="640" height="360" src="https://www.youtube.com/embed/a4UPkepMXLM" frameborder="0" allowfullscreen></iframe>'),
+(3,'decimal division','<iframe width="640" height="360" src="https://www.youtube.com/embed/bosixfBHikg" frameborder="0" allowfullscreen></iframe>'),
+(4,'mean','<iframe width="640" height="360" src="https://www.youtube.com/embed/FM36OLbdZv8" frameborder="0" allowfullscreen></iframe>'),
+(5,'algebra','<iframe width="640" height="360" src="https://www.youtube.com/embed/1-_hZStC9fM" frameborder="0" allowfullscreen></iframe>'),
+(6,'rotations','<iframe width="640" height="360" src="https://www.youtube.com/embed/a6MQTpBSNBk" frameborder="0" allowfullscreen></iframe>'),
+(7,'geometry patterns','<iframe width="640" height="360" src="https://www.youtube.com/embed/Ka82QC4QvGA" frameborder="0" allowfullscreen></iframe>'),
+(8,'decimal subtraction','<iframe width="640" height="360" src="https://www.youtube.com/embed/lDXaju6JoQ0" frameborder="0" allowfullscreen></iframe>'),
+(9,'lines of symmetry','<iframe width="640" height="360" src="https://www.youtube.com/embed/qDtWxr2mfoE" frameborder="0" allowfullscreen></iframe>'),
+(10,'probability on a number line','<iframe width="640" height="360" src="https://www.youtube.com/embed/wgpakdTBu7U" frameborder="0" allowfullscreen></iframe>'),
+(11,'units','<iframe width="640" height="360" src="https://www.youtube.com/embed/umBdW7talCo" frameborder="0" allowfullscreen></iframe>'),
+(12,'units of capacity','<iframe width="640" height="360" src="https://www.youtube.com/embed/-mfF886s_AA" frameborder="0" allowfullscreen></iframe>'),
+(13,'percent','<iframe width="640" height="360" src="https://www.youtube.com/embed/rR95Cbcjzus" frameborder="0" allowfullscreen></iframe>'),
+(14,'cartesian graph','<iframe width="640" height="360" src="https://www.youtube.com/embed/JM06kjvAD_0" frameborder="0" allowfullscreen></iframe>'),
+(15,'volume of a rectangular prism','<iframe width="640" height="360" src="https://www.youtube.com/embed/u1nWI2b0fT4" frameborder="0" allowfullscreen></iframe>'),
+(16,'quadrilateral properties','<iframe width="640" height="360" src="https://www.youtube.com/embed/udS3nkj2cfg" frameborder="0" allowfullscreen></iframe>'),
+(17,'interpreting graphs','<iframe width="640" height="360" src="https://www.youtube.com/embed/FsbxlAw1Cbo" frameborder="0" allowfullscreen></iframe>'),
+(18,'division','<iframe width="640" height="360" src="https://www.youtube.com/embed/jztxjTGhzRo" frameborder="0" allowfullscreen></iframe>'),
+(19,'metric conversions','<iframe width="640" height="360" src="https://www.youtube.com/embed/w0nqd_HXHPQ" frameborder="0" allowfullscreen></iframe>'),
+(20,'stem-and-leaf plots','<iframe width="640" height="360" src="https://www.youtube.com/embed/LEFE1km5ROY" frameborder="0" allowfullscreen></iframe>'),
+(21,'ratio','<iframe width="640" height="360" src="https://www.youtube.com/embed/IKf5Bjgup6s" frameborder="0" allowfullscreen></iframe>'),
+(22,'probability','<iframe width="640" height="360" src="https://www.youtube.com/embed/ix-SD2kK-b8" frameborder="0" allowfullscreen></iframe>'),
+(23,'comparing and ordering decimals','<iframe width="640" height="360" src="https://www.youtube.com/embed/JJawhaMqaXg" frameborder="0" allowfullscreen></iframe>'),
+(24,'graphing patterns','<iframe width="640" height="360" src="https://www.youtube.com/embed/c92xoWPp9Qg" frameborder="0" allowfullscreen></iframe>'),
+(25,'area of a parallelogram','<iframe width="640" height="360" src="https://www.youtube.com/embed/a4UPkepMXLM" frameborder="0" allowfullscreen></iframe>'),
+(26,'algebra','<iframe width="640" height="360" src="https://www.youtube.com/embed/1-_hZStC9fM" frameborder="0" allowfullscreen></iframe>'),
+(27,'surface area','<iframe width="640" height="360" src="https://www.youtube.com/embed/IHqfTfvOEjg" frameborder="0" allowfullscreen></iframe>'),
+(28,'ordering and comparing fractions','<iframe width="640" height="360" src="https://www.youtube.com/embed/N8dIOmk_lHs" frameborder="0" allowfullscreen></iframe>'),
+(29,'decimal multiplication','<iframe width="640" height="360" src="https://www.youtube.com/embed/STyoP3rCmb0" frameborder="0" allowfullscreen></iframe>'),
+(30,'angles','<iframe width="640" height="360" src="https://www.youtube.com/embed/pEnpwa3Yo8E" frameborder="0" allowfullscreen></iframe>'),
+(31,'interpreting charts','<iframe width="640" height="360" src="https://www.youtube.com/embed/xO2HptuN5Wg" frameborder="0" allowfullscreen></iframe>'),
+(32,'isometric drawings','<iframe width="640" height="360" src="https://www.youtube.com/embed/8BFjHJTs4q0" frameborder="0" allowfullscreen></iframe>'),
+(33,'measuring angles','<iframe width="640" height="360" src="https://www.youtube.com/embed/umBdW7talCo" frameborder="0" allowfullscreen></iframe>'),
+(34,'ordering and comparing fractions','<iframe width="640" height="360" src="https://www.youtube.com/embed/KNdUJQ_qd4U" frameborder="0" allowfullscreen></iframe>'),
+(35,'transformations','<iframe width="640" height="360" src="https://www.youtube.com/embed/r3lN_BADmPQ" frameborder="0" allowfullscreen></iframe>'),
+(36,'area of a triangle','<iframe width="640" height="360" src="https://www.youtube.com/embed/dAns-8FJB1s" frameborder="0" allowfullscreen></iframe>'),
+(37,'decimal addition','<iframe width="640" height="360" src="https://www.youtube.com/embed/kwh4SD1ToFc" frameborder="0" allowfullscreen></iframe> '),
+(38,'place value','<iframe width="640" height="360" src="https://www.youtube.com/embed/T5Qf0qSSJFI" frameborder="0" allowfullscreen></iframe> '),
+(39,'benchmarks','<iframe width="640" height="360" src="https://www.youtube.com/embed/WD7e8FZ05BI" frameborder="0" allowfullscreen></iframe>'),
+(40,'volume of a triangular prism','<iframe width="640" height="360" src="https://www.youtube.com/embed/5ZHXzB28Kxc" frameborder="0" allowfullscreen></iframe>'),
+(41,'decimal multiplication','<iframe width="640" height="360" src="https://www.youtube.com/embed/STyoP3rCmb0" frameborder="0" allowfullscreen></iframe>');
+
+select * from videos;
+
 ALTER TABLE test_result MODIFY incorrect_questions varchar(1000);
 
 SELECT * FROM question_6 WHERE quest_id IN  (6, 10, 15, 18, 3, 9, 14, 25, 1,5, 8, 16, 4, 11, 20, 24, 2, 7, 12, 13) ORDER BY quest_id;

@@ -37,9 +37,9 @@ foreach ($substrandArray as $substrand){
 	echo "<li> ". $substrand . "</li>";
 	}		
 foreach($linkArray as $substrand=>$link){
-		echo "<p> " . $substrand . ": " .
+		echo "<p> " . $substrand . ": </br>" .
 		
-		"<video id= '". $substrand . "' src = '" . $link . "'></video>"
+		 $link 
 		
 		. "</p> ";
 	}
