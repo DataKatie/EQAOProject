@@ -84,28 +84,25 @@ public static function user_exists($username){
 
 //function to check if the username and password match. It first checks if the user is registered
 public static function validate_user($username, $password){
-		$query = "SELECT userName, password, active FROM Person WHERE userName = :userName";
-		$statement = self::getDB()->prepare($query);
-    	$statement->bindValue(':userName', $username);
-		$statement->execute();
-		$results = $statement->fetch();
-		if (empty($results)){
-			echo "This username does not exist. Please sign up now!";
-			return false;
-		}
-		else{
-			if ($password != $results['password']){
-				echo "Password does not match. Please try again.";
-					return false;
-				}
-			else if($results['active']==0){
-				echo "Your account has not been activated. Please first activate your account by following the emailed link.";
-				
-				}	
-			else
-				return true;	
-			
-			} 		
+      $query = "SELECT userName, password, active FROM Person WHERE userName = :userName";
+      $statement = self::getDB()->prepare($query);
+       $statement->bindValue(':userName', $username);
+      $statement->execute();
+      $results = $statement->fetch();
+      if (empty($results)){
+         return false;
+      }
+      else{
+         if ($password != $results['password']){
+                return false;
+            }
+         else if($results['active']==0){
+                    return false;
+            }
+         else
+            return true;   
+         
+         }     	
 		  
 	}
 

@@ -1,6 +1,3 @@
-<?php
-ob_start();
-?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
@@ -8,43 +5,106 @@ ob_start();
 
 <?php
 require_once('Database.php');
-session_start();
+$err = true;
+if(isset($_POST['btnSubmit'])){
+    
+    if(!(Database::user_exists($_POST['userName']))){
+        $err =  false;
+    }
+    else{
+        $userEmail = Database::retrieve_email($_POST['userName']);
+        $userFullName = Database::retrieve_name($_POST['userName']);
+        $token = bin2hex(openssl_random_pseudo_bytes(16));
 
-$isSubmitted = false;
-if(isset($_POST['btnsubmit']))
-{
-    $isSubmitted = true;
-    $_SESSION['userName']=$_POST['userName'];
-    $_SESSION['userId']=Database::retrieve_id($_POST['userName']);
-    $_SESSION['lastTime']=time();
+        Database::update_token($_POST['userName'], $token);
 
-    if($isSubmitted){
-        $isValidLogin = Database::validate_user($_POST['userName'], $_POST['password']);
-        //Remember Me
-        //saves the username and password in cookie
 
-        if(isset($_POST['autologin']))
-        {
-            $remember = $_POST['autologin'];
-            if($remember = 1)
-            {
-                setcookie("userName",$_POST['userName'],time()+3600*24);
-                setcookie("password",($_POST['password']),time()+3600*24);
-            }
+        /**
+         * This example shows settings to use when sending via Google's Gmail servers.
+         */
 
+//SMTP needs accurate times, and the PHP time zone MUST be set
+//This should be done in your php.ini, but this is how to do it if you don't have access to that
+        date_default_timezone_set('Etc/UTC');
+
+        require('PHPMailerAutoload.php');
+
+//Create a new PHPMailer instance
+        $mail = new PHPMailer;
+
+//Tell PHPMailer to use SMTP
+        $mail->isSMTP();
+
+//Enable SMTP debugging
+// 0 = off (for production use)
+// 1 = client messages
+// 2 = client and server messages
+        $mail->SMTPDebug = 0;
+
+//Ask for HTML-friendly debug output
+        $mail->Debugoutput = 'html';
+
+//Set the hostname of the mail server
+        $mail->Host = 'ssl://smtp.gmail.com';
+
+//Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
+        $mail->Port = 465;
+
+//Set the encryption system to use - ssl (deprecated) or tls
+        $mail->SMTPSecure = 'ssl';
+
+//Whether to use SMTP authentication
+        $mail->SMTPAuth = true;
+
+//Username to use for SMTP authentication - use full email address for gmail
+        $mail->Username = "eqaotestprep@gmail.com";
+
+//Password to use for SMTP authentication
+        $mail->Password = "katieistheboss";
+
+//Set who the message is to be sent from
+        $mail->setFrom('eqaotestprep@gmail.com', 'EduTech');
+
+//Set an alternative reply-to address
+//$mail->addReplyTo('replyto@example.com', 'First Last');
+
+//Set who the message is to be sent to
+        $mail->addAddress($userEmail, $userFullName);
+
+//Set the subject line
+        $mail->Subject = 'Your EduTech password';
+
+//Read an HTML message body from an external file, convert referenced images to embedded,
+//convert HTML into a basic plain-text alternative body
+        $mail->msgHTML("<h2>Dear Edutech user, <br> Please follow the link to update your password: <a href=localhost/finalProject/updateForgottenPassword.php?userName=".$_POST['userName']."&token=".$token.">Update Password </a> <br> 
+Or, paste this link into your browser: localhost/finalProject/updateForgottenPassword.php?userName=".$_POST['userName']."&token=".$token."</h2>");
+
+//Replace the plain text body with one created manually
+        $mail->AltBody = "Dear Edutech user, please click or paste the following url into your browser to update your password: localhost/finalProject/updateForgottenPassword.php?userName=".$_POST['userName']."&token=".$token;
+
+//Attach an image file
+//$mail->addAttachment('images/phpmailer_mini.png');
+
+//send the message, check for errors
+        if (!$mail->send()) {
+            $error =  "Mailer Error: " . $mail->ErrorInfo;
+            echo '<script language="javascript">';
+            echo 'alert("'.$error.'")';
+            echo '</script>';
+        } else {
+            $error = "Your username and password have been emailed to" . $userEmail;
+            echo '<script language="javascript">';
+            echo 'alert("'.$error.'")';
+            echo '</script>';
+            // echo "Your username and password have been emailed to" . $userEmail;
         }
-        else
-        {
-            unset($_COOKIE['userName']);
-            unset($_COOKIE['password']);
-            setcookie("userName",'',time()-3600*24);
-            setcookie("password",'',time()-3600*24);
-        }
-
     }
 
+
 }
+
 ?>
+
 <head>
     <title>Edu-Tech</title>
     <!-- Meta -->
@@ -68,7 +128,6 @@ if(isset($_POST['btnsubmit']))
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 
     <style>
         footer ul.social.list-inline li a {
@@ -103,10 +162,9 @@ if(isset($_POST['btnsubmit']))
         footer ul.social.list-inline li.social-google-plus a:hover { background-color: white; }
         footer .footer { text-align: center; padding: 50px 0; }
     </style>
-
 </head> 
 
-<body class="login-page access-page has-full-screen-bg">
+<body class="resetpass-page access-page has-full-screen-bg">
     <div class="upper-wrapper">
         <!-- ******HEADER****** -->
         <header class="header">  
@@ -118,40 +176,33 @@ if(isset($_POST['btnsubmit']))
             </div><!--//container-->
         </header><!--//header-->
         
-        <!-- ******Login Section****** --> 
-        <section class="login-section access-section section">
+        <!-- ******resetpass Section****** --> 
+        <section class="resetpass-section access-section section">
             <div class="container">
                 <div class="row">
-                    <div class="form-box col-md-offset-2 col-sm-offset-0 xs-offset-0 col-xs-12 col-md-8">
+                    <div class="form-box col-md-6 col-sm-8 col-xs-12 col-md-offset-3 col-sm-offset-2 xs-offset-0">     
                         <div class="form-box-inner">
-                            <h2 class="title text-center">Log in to Edu-Tech</h2>
+                            <h2 class="title text-center">Password Reset</h2>    
+                            <p class="intro">Please enter your username below and we'll email you a link to create a new password.</p>
                             <div class="row">
-                                <div class="form-container col-xs-12">
-                                    <form class="login-form" action="login.php" method="post">
+                                <div class="form-container">
+                                    <form class="resetpass-form" method="post" action="reset-password.php">
                                         <?php
-                                            if ($isSubmitted && !$isValidLogin)
-                                                echo '<div class="alert alert-danger">
-                                                            <strong>Incorrect credentials!</strong> 
-                                                      </div>'
+                                        if (!$err)
+                                            echo '<div class="alert alert-danger">
+                                                            <strong>Invalid username</strong> 
+                                                  </div>'
                                         ?>
                                         <div class="form-group email">
-                                            <label class="sr-only">Email or username</label>
-                                            <input id="login-email" type="text" class="form-control login-email" placeholder="Username" name="userName" value="<?php if(isset($_COOKIE['userName'])) { echo $_COOKIE['userName']; } ?>">
-                                        </div><!--//form-group-->
-                                        <div class="form-group password">
-                                            <label class="sr-only" for="login-password">Password</label>
-                                            <input id="login-password" type="password" class="form-control login-password" placeholder="Password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password']; } ?>">
-                                            <p class="forgot-password"><a href="reset-password.php">Forgot password?</a></p>
-                                        </div><!--//form-group-->
-                                        <button type="submit" class="btn btn-block btn-cta-primary" name ="btnsubmit">Log in</button>
-                                        <div class="checkbox remember">
-                                            <label>
-                                                <input type="checkbox" name="autologin"> Remember me
-                                            </label>
-                                        </div><!--//checkbox-->
-                                         <p class="lead">Don't have a Edu-Tech account yet? <br /><a class="signup-link" href="signup.html">Create your account now</a></p>
+                                            <label class="sr-only" for="reset-email">Email</label>
+                                            <input id="reset-username" type="text" class="form-control resetpass-userName" placeholder="username" name="userName">
+                                        </div><!--//form-group-->  
+                                        <button type="submit" class="btn btn-block btn-cta-primary" name="btnSubmit" value="Submit">Reset Password</button>
                                     </form>
+                                    <p class="lead text-center">Don't have a Edu-Tech account yet? <a class="signup-link" href="testRegistrationForm.php">Create your account now</a></p>
+                                    <p class="lead text-center">Take me back to the <a href="login.php">login</a> page</p>
                                 </div><!--//form-container-->
+                            </div><!--//row-->
                         </div><!--//form-box-inner-->
                     </div><!--//form-box-->
                 </div><!--//row-->
@@ -183,6 +234,7 @@ if(isset($_POST['btnsubmit']))
         </div><!--//bottom-bar-->
     </footer><!--//footer-->
 
+ 
     <!-- Javascript -->          
     <script type="text/javascript" src="assets/plugins/jquery-1.12.3.min.js"></script>
     <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
@@ -196,18 +248,6 @@ if(isset($_POST['btnsubmit']))
             
 </body>
 </html>
-<?php
 
-?>
-<?php
-if($isSubmitted){
-    if ($isValidLogin)
-    {
-        //echo "login succeeded";
-        header("Location: welcome.php");
-        error_reporting(E_ALL | E_WARNING | E_NOTICE);
-        ini_set('display_errors', TRUE);
-        flush();
-    }
-}
-?>
+
+
