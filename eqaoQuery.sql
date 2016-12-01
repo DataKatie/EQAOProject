@@ -188,7 +188,7 @@ INSERT INTO question_6 values (30, " Mrs. Sherman asks students to record their 
 INSERT INTO question_6 values (31, " Consider the growing pattern shown on the grid below. The pattern continues in the same way. What ordered pair represents the next point to be plotted in this pattern?", "2013_gr6_quest3.jpg", "(4,9)", " (10,4)", " (9,4)", "(4,10)", 4, "Patterning", "graphing patterns");
 INSERT INTO question_6 values (32, " There are 12 books in a case. There are 6 cases in a box and 24 boxes in a container. If each container of books costs $2592, what is the cost of one book?", null, "$1.50", " $9.00", " $18.00", "$36.00", 1, "NumberSense", "division");
 INSERT INTO question_6 values (33, " A parallelogram is shown below. Which rectangle has the same area as this parallelogram?", "2013_gr6_quest5.jpg", "2013_gr6_quest5ansa.jpg", "2013_gr6_quest5ansb.jpg ", " 2013_gr6_quest5ansc.jpg ", "2013_gr6_quest5ansd.jpg ", 3, "Measurement", " area of a parallelogram");
-INSERT INTO question_6 values (34, " If n × 3 = 24 and n + 40 − s = 36, what is the value of s? ",null, "8",  " 10 ", " 12 ", "14 ", 3, "Patterning", " algebra");
+INSERT INTO question_6 values (34, " If n x 3 = 24 and n + 40 - s = 36, what is the value of s? ",null, "8",  " 10 ", " 12 ", "14 ", 3, "Patterning", " algebra");
 INSERT INTO question_6 values (35, "The diagram below shows a shoebox without a lid. A student covers the outside of the shoebox with construction paper. If the student does not cover the lid, what is the surface area that is covered?","2013_gr6_quest7.jpg", "982.25 square cm",  "1433.50 square cm", "1964.50 square cm", "5044.50 square cm", 2, "Measurement", " surface area");
 INSERT INTO question_6 values (36, "Which of the following fractions has the smallest value?",null, "4/5",  " 4/4 ", " 4/3", "4/2 ", 1, "NumberSense", " ordering and comparing fractions");
 INSERT INTO question_6 values (37, "There are 2 blue, 5 green, 6 red and 7 purple marbles in a bag. Erin picks one marble from the bag without looking. What is the probability that she will pick a marble that is purple?",null, "7%",  "20% ", " 35%", "54%", 3, "Data", " probability");
@@ -446,4 +446,17 @@ select * from grades;
 delete from grades where userId = 7;
 
 
-select * from test_result;
+select * from question_6;
+
+Update question_6 set quest_text ="Which two equations are true if n = 2?
+Equation 1: 4 + n + 3 = 5
+Equation 2: 4 - n + 3 = 5
+Equation 3: 4 x n + 3 = 5
+Equation 4: 4 ÷ n + 3 = 5" where quest_id = 5;
+
+Update question_6 set quest_text = "What is the value of 0.730 - 0.156?" where quest_id = 9;
+update question_6 set image = "2015_gr6_quest6.jpg" where quest_id = 20;
+select * from question_6 where quest_id = 20;
+
+select * from person;
+insert into person values (11, "Nithya" "Nithyaisthebest1234", "Nithya", "Thayananthan", "student", 
